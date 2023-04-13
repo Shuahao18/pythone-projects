@@ -1,17 +1,55 @@
-from tkinter import *
-import customtkinter as ctk
+import customtkinter 
 import pygame
-window = ctk.CTk()
+from tkinter import filedialog, Listbox, PhotoImage, Button, Frame, Menu
+from PIL import Image
+
+window = customtkinter.CTk()
 window.title('MP3 Player')
-window.iconbitmap("mp3.png")
 window.geometry("500x400")
 
 pygame.mixer.init()
+def add_song():
+    song = filedialog.askopenfilename(initialdir='audio/', title="choose A song", filetypes=(("mp3 Files", "*.mp3"),))
+    print(song)
+
+
+def add_song_Menu(my_Menu):
+    pass
+
 song_Box = Listbox(window, bg="gray", fg="orange", width=60)
 song_Box.pack(pady=20)
 
-def Play():
-    pygame.mixer.music.load("")
-my_button = Button(window, text="Play this song", font=("Helvitica", 32), command=Play)
-my_button.pack(pady=20)
+back_Button_img = customtkinter.CTKPhotoImage(Light_image=Image.open('//home//joshua//Downloads//images//backward.png', width=50, height=50))
+forward_Button_img = customtkinter.CTKPhotoImage(file='//home//joshua//Downloads//images//fast-forward.png')
+play_Button_img = customtkinter.CTKPhotoImage(file='//home//joshua//Downloads//images//play.png')
+pause_Button_img = customtkinter.CTKPhotoImage(file='//home//joshua//Downloads//images//pause.png')
+stop_Button_img = customtkinter.CTKPhotoImage(file='//home//joshua//Downloads//images//stop.png')
+
+controls_frame = Frame(window)
+controls_frame.pack()
+
+back_Btn = Button(controls_frame, image=back_Button_img, borderwidth=0)
+forward_Btn = Button(controls_frame, image=forward_Button_img, borderwidth=0)
+play_Btn = Button(controls_frame, image=forward_Button_img, borderwidth=0)
+pause_Btn = Button(controls_frame, image=pause_Button_img, borderwidth=0)
+stop_Btn = Button(controls_frame, image=stop_Button_img, borderwidth=0)
+
+back_Btn.grid(row=0, column=0, padx=10)
+# P
+
+my_Menu = Menu(window)
+window.config(menu=my_Menu)
+
+add_song_Menu = Menu(my_Menu)
+my_Menu.add_cascade(label="Add Songs", menu=add_song_Menu)
+add_song_Menu.add_command(label="Add one Song to Playlist", command=add_song)
+
+
+
+#def Play():
+ #   pygame.mixer.music.load("")
+#my_button = Button(window, text="Play this song", font=("Helvitica", 32), command=Play)
+#my_button.pack(pady=20)
+
 window.mainloop()
+
